@@ -20,12 +20,14 @@ class ShowNodeIndexes(ReporterPlugin):
 	def settings(self):
 		self.menuName = Glyphs.localize({
 			'en': u'Node Indexes',
+			'es': u'listado de nodos',
 			'de': u'Indexnummern',
 			'nl': u'Indexgetallen'
 		})
 		self.generalContextMenus = [
 			{'name': Glyphs.localize({
 				'en': u'Toggle Display of BCP Indexes',
+				'es': u'Mostrar/ocultar listado de manejadores',
 				'de': u'Anfasser-Indexnummern ein/ausblenden',
 				'nl': u'Indexgetallen voor BCPs in/uitschakelen'
 			}), 'action': self.toggleBCPs},
