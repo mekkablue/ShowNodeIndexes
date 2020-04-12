@@ -1,4 +1,5 @@
 # encoding: utf-8
+from __future__ import division, print_function, unicode_literals
 
 ###########################################################################################################
 #
@@ -11,32 +12,33 @@
 #
 ###########################################################################################################
 
-
+import objc
+from GlyphsApp import *
 from GlyphsApp.plugins import *
-from GlyphsApp import OFFCURVE
 
 class ShowNodeIndexes(ReporterPlugin):
 
+	@objc.python_method
 	def settings(self):
 		self.menuName = Glyphs.localize({
-			'en': u'Node Indexes',
-			'es': u'listado de nodos',
-			'de': u'Indexnummern',
-			'nl': u'Indexgetallen'
+			'en': 'Node Indexes',
+			'es': 'listado de nodos',
+			'de': 'Indexnummern',
+			'fr': 'numéros de points',
+			'nl': 'Indexgetallen',
 		})
 		self.generalContextMenus = [
 			{'name': Glyphs.localize({
-				'en': u'Toggle Display of BCP Indexes',
-				'es': u'Mostrar/ocultar listado de manejadores',
-				'de': u'Anfasser-Indexnummern ein/ausblenden',
-				'nl': u'Indexgetallen voor BCPs in/uitschakelen'
+				'en': 'Toggle Display of BCP Indexes',
+				'es': 'Mostrar/ocultar listado de manejadores',
+				'de': 'Anfasser-Indexnummern ein/ausblenden',
+				'fr': 'Afficher ou non les numéros de poignées',
+				'nl': 'Indexgetallen voor BCPs in/uitschakelen',
 			}), 'action': self.toggleBCPs},
 		]
-		NSUserDefaults.standardUserDefaults().registerDefaults_({
-			"com.mekkablue.ShowNodeIndexes.displayBCPs": True
-		})
-					
-		
+		Glyphs.registerDefault( "com.mekkablue.ShowNodeIndexes.displayBCPs", True )
+	
+	@objc.python_method
 	def foreground(self, layer):
 		displayBCPs = Glyphs.defaults["com.mekkablue.ShowNodeIndexes.displayBCPs"]
 		for thisPath in layer.paths:
@@ -48,3 +50,7 @@ class ShowNodeIndexes(ReporterPlugin):
 	def toggleBCPs(self):
 		Glyphs.defaults["com.mekkablue.ShowNodeIndexes.displayBCPs"] = not Glyphs.defaults["com.mekkablue.ShowNodeIndexes.displayBCPs"]
 
+	@objc.python_method
+	def __file__(self):
+		"""Please leave this method unchanged"""
+		return __file__
