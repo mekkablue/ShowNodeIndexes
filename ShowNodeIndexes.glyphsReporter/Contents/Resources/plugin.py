@@ -24,7 +24,7 @@ class ShowNodeIndexes(ReporterPlugin):
 			'en': 'Node Indexes',
 			'es': 'listado de nodos',
 			'de': 'Indexnummern',
-			'fr': 'numéros de points',
+			'fr': 'numéros de nœuds',
 			'nl': 'Indexgetallen',
 		})
 		self.generalContextMenus = [
@@ -32,7 +32,7 @@ class ShowNodeIndexes(ReporterPlugin):
 				'en': 'Toggle Display of BCP Indexes',
 				'es': 'Mostrar/ocultar listado de manejadores',
 				'de': 'Anfasser-Indexnummern ein/ausblenden',
-				'fr': 'Afficher ou non les numéros de poignées',
+				'fr': 'Afficher/masquer les numéros des poignées',
 				'nl': 'Indexgetallen voor BCPs in/uitschakelen',
 			}), 'action': self.toggleBCPs},
 		]
