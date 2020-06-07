@@ -39,13 +39,28 @@ class ShowNodeIndexes(ReporterPlugin):
 		Glyphs.registerDefault( "com.mekkablue.ShowNodeIndexes.displayBCPs", True )
 	
 	@objc.python_method
+	def conditionsAreMetForDrawing(self):
+		"""
+		Don't activate if text or pan (hand) tool are active.
+		"""
+		currentController = self.controller.view().window().windowController()
+		if currentController:
+			tool = currentController.toolDrawDelegate()
+			textToolIsActive = tool.isKindOfClass_( NSClassFromString("GlyphsToolText") )
+			handToolIsActive = tool.isKindOfClass_( NSClassFromString("GlyphsToolHand") )
+			if not textToolIsActive and not handToolIsActive: 
+				return True
+		return False
+	
+	@objc.python_method
 	def foreground(self, layer):
-		displayBCPs = Glyphs.defaults["com.mekkablue.ShowNodeIndexes.displayBCPs"]
-		for thisPath in layer.paths:
-			for i in range(len(thisPath.nodes)):
-				thisNode = thisPath.nodes[i]
-				if thisNode.type != OFFCURVE or displayBCPs:
-					self.drawTextAtPoint("%i"%i, thisNode.position, fontColor=NSColor.brownColor())
+		if self.conditionsAreMetForDrawing():
+			displayBCPs = Glyphs.defaults["com.mekkablue.ShowNodeIndexes.displayBCPs"]
+			for thisPath in layer.paths:
+				for i in range(len(thisPath.nodes)):
+					thisNode = thisPath.nodes[i]
+					if thisNode.type != OFFCURVE or displayBCPs:
+						self.drawTextAtPoint("%i"%i, thisNode.position, fontColor=NSColor.brownColor())
 	
 	def toggleBCPs(self):
 		Glyphs.defaults["com.mekkablue.ShowNodeIndexes.displayBCPs"] = not Glyphs.defaults["com.mekkablue.ShowNodeIndexes.displayBCPs"]
